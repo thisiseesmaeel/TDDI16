@@ -24,16 +24,18 @@ private:
     AVL_Tree_Node(const Comparable &element, AVL_Tree_Node *left, AVL_Tree_Node *right)
         : element{element}, left{left}, right{right}, height{} {}
 
-    Comparable     element;
+    Comparable element;
     AVL_Tree_Node *left;
     AVL_Tree_Node *right;
-    int            height;
+    int height;
 
     // Aliases to simplify the code
     using Node = AVL_Tree_Node<Comparable>;
     using Node_Pointer = AVL_Tree_Node<Comparable>*;
-
+    
     // The following functions are called from corresponding functions in AVL_Tree
+    static void remove(const Comparable&, Node_Pointer&);
+
     static void insert(const Comparable&, Node_Pointer&);
 
     static void clear(Node_Pointer&);
@@ -143,6 +145,81 @@ void AVL_Tree_Node<Comparable>::double_rotate_with_right_child(Node_Pointer &k3)
 /*
  * Member functions for AVL_Tree_Node
  */
+
+//Remove function
+
+template <typename Comparable>
+void AVL_Tree_Node<Comparable>::remove(const Comparable &x, Node_Pointer &t) {
+    if (t == nullptr) {
+        throw AVL_Tree_error("Error!");
+        // return;  // Här kan ett undantag genereras i stället ...
+    }
+
+    if (x < t->element) {
+        remove(x, t->left);
+
+        //kontrollerar om noden är balanserad
+        if (node_height(t->right) - node_height(t->left) == 2)
+         {
+             if (t->right->right != nullptr)
+             {
+                // har höger-barn
+                single_rotate_with_right_child(t);
+             }
+             else{
+                //har ett vänster-barn
+                double_rotate_with_left_child(t);
+             }
+         }
+         else{
+            calculate_height(t);
+         }
+    } else if (t->element < x) {
+        remove(x, t->right);
+
+        //kontrollerar om noden är balanserad
+        if (node_height(t->left) - node_height(t->right) == 2)
+         {
+          if (t->left->left != nullptr)
+             {
+                // har vänster-barn
+                single_rotate_with_left_child(t);
+             }
+             else{
+                //har ett höger-barn
+                double_rotate_with_right_child(t);
+             }   
+         }
+         else{
+            calculate_height(t);
+         }
+        
+    } else {
+        // Sökt värde finns i noden t
+        Node_Pointer tmp;
+
+        if (t->left != nullptr && t->right != nullptr) {
+            // Noden har två barn och ersätts med inorder efterföljare
+            tmp = find_min(t->right);
+            t->element = tmp->element;
+            remove(t->element, t->right);
+
+        } else {
+            // Noden har inget eller ett barn
+            tmp = t;
+
+            if (t->left == nullptr)
+                t = t->right;
+            else
+                t = t->left;
+
+            delete tmp;
+        }
+
+        
+    }
+}
+
 
 /**
  * Insert x in tree t as a new leaf. Check balance and adjust tree if needed.
