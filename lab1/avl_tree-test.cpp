@@ -23,7 +23,8 @@ using namespace std;
 
 int main() {
     AVL_Tree<int>  avl_tree;
-
+  
+/*
     for (int i = 1; i <= 11; i++)
         avl_tree.insert(i);
 
@@ -37,7 +38,103 @@ int main() {
         avl_tree.print(cout);
         cout << endl;
     }
+    
 
+    //TEST-TRÄD 1
+    
+    avl_tree.insert(6);
+    avl_tree.insert(4);
+    avl_tree.insert(10);
+    avl_tree.insert(5);
+
+    cout << "AVL-träd av test 1:\n\n";
+    avl_tree.print_tree(cout);
+    
+    //TEST-TRÄD 2
+
+    avl_tree.insert(6);
+    avl_tree.insert(4);
+    avl_tree.insert(10);
+    avl_tree.insert(15);
+    
+    cout << "AVL-träd av test 2:\n\n";
+    avl_tree.print_tree(cout);
+*/
+
+    //TEST-TRÄD 3
+
+    avl_tree.insert(9);
+    avl_tree.insert(4);
+    avl_tree.insert(11);
+    avl_tree.insert(2);
+    avl_tree.insert(6);
+    avl_tree.insert(10);
+    avl_tree.insert(12);
+    avl_tree.insert(1);
+    avl_tree.insert(3);
+    avl_tree.insert(5);
+    avl_tree.insert(7);
+    avl_tree.insert(13);
+    avl_tree.insert(8);
+   
+    
+    cout << "AVL-träd av test 3:\n\n";
+    avl_tree.print_tree(cout);
+/*
+
+    avl_tree.insert(44);
+    avl_tree.insert(20);
+    avl_tree.insert(56);
+    avl_tree.insert(10);
+    avl_tree.insert(35);
+    avl_tree.insert(50);
+    avl_tree.insert(40);
+   
+    
+    cout << "AVL-träd av test 3:\n\n";
+    avl_tree.print_tree(cout);
+
+
+    avl_tree.insert(44);
+    avl_tree.insert(20);
+    avl_tree.insert(60);
+    avl_tree.insert(30);
+    avl_tree.insert(50);
+    avl_tree.insert(70);
+    avl_tree.insert(99);
+   
+    
+    cout << "AVL-träd av test 3:\n\n";
+    avl_tree.print_tree(cout);
+
+
+
+    avl_tree.insert(44);
+    avl_tree.insert(20);
+    avl_tree.insert(60);
+    avl_tree.insert(30);
+    avl_tree.insert(50);
+    avl_tree.insert(70);
+    avl_tree.insert(45);
+   
+    
+    cout << "AVL-träd av test 3:\n\n";
+    avl_tree.print_tree(cout);
+
+
+    avl_tree.insert(44);
+    avl_tree.insert(20);
+    avl_tree.insert(56);
+    avl_tree.insert(10);
+    avl_tree.insert(35);
+    avl_tree.insert(50);
+    avl_tree.insert(1);
+    avl_tree.insert(40);
+   
+    
+    cout << "AVL-träd av test 3:\n\n";
+    avl_tree.print_tree(cout);
+*/
     unsigned int choice;
     unsigned int value;
 

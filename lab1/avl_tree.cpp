@@ -151,7 +151,7 @@ void AVL_Tree_Node<Comparable>::double_rotate_with_right_child(Node_Pointer &k3)
 template <typename Comparable>
 void AVL_Tree_Node<Comparable>::remove(const Comparable &x, Node_Pointer &t) {
     if (t == nullptr) {
-        throw AVL_Tree_error("Error!");
+        throw AVL_Tree_error("Värdet finns inte i AVL-trädet!");
         // return;  // Här kan ett undantag genereras i stället ...
     }
 
@@ -161,14 +161,14 @@ void AVL_Tree_Node<Comparable>::remove(const Comparable &x, Node_Pointer &t) {
         //kontrollerar om noden är balanserad
         if (node_height(t->right) - node_height(t->left) == 2)
          {
-             if (t->right->right != nullptr)
+             if (node_height(t->right->right) >= node_height(t->right->left))
              {
                 // har höger-barn
                 single_rotate_with_right_child(t);
              }
              else{
                 //har ett vänster-barn
-                double_rotate_with_left_child(t);
+                double_rotate_with_right_child(t);
              }
          }
          else{
@@ -180,14 +180,14 @@ void AVL_Tree_Node<Comparable>::remove(const Comparable &x, Node_Pointer &t) {
         //kontrollerar om noden är balanserad
         if (node_height(t->left) - node_height(t->right) == 2)
          {
-          if (t->left->left != nullptr)
+          if (node_height(t->left->left) >= node_height(t->left->right))
              {
                 // har vänster-barn
                 single_rotate_with_left_child(t);
              }
              else{
                 //har ett höger-barn
-                double_rotate_with_right_child(t);
+                double_rotate_with_left_child(t);
              }   
          }
          else{
@@ -198,13 +198,47 @@ void AVL_Tree_Node<Comparable>::remove(const Comparable &x, Node_Pointer &t) {
         // Sökt värde finns i noden t
         Node_Pointer tmp;
 
-        if (t->left != nullptr && t->right != nullptr) {
+        if (t->left != nullptr && t->right != nullptr) 
+        {
             // Noden har två barn och ersätts med inorder efterföljare
             tmp = find_min(t->right);
             t->element = tmp->element;
             remove(t->element, t->right);
-
-        } else {
+            
+            //kontrollerar om noden är balanserad
+            if (node_height(t->left) - node_height(t->right) == 2)
+            {
+                if (node_height(t->left->left) >= node_height(t->left->right))
+                {
+                    // har vänster-barn
+                    single_rotate_with_left_child(t);
+                }
+                else{
+                //har ett höger-barn
+                    double_rotate_with_left_child(t);
+                }   
+            }
+        
+            else if (node_height(t->right) - node_height(t->left) == 2)
+            {
+                if (node_height(t->right->right) >= node_height(t->right->left))
+                {
+                    // har höger-barn
+                    single_rotate_with_right_child(t);
+                }
+                else
+                {
+                    //har ett vänster-barn
+                    double_rotate_with_right_child(t);
+                }
+            }   
+            else
+            {
+                calculate_height(t);
+            }
+            
+        }
+        else {
             // Noden har inget eller ett barn
             tmp = t;
 
@@ -215,7 +249,6 @@ void AVL_Tree_Node<Comparable>::remove(const Comparable &x, Node_Pointer &t) {
 
             delete tmp;
         }
-
         
     }
 }
@@ -447,7 +480,8 @@ void AVL_Tree<Comparable>::insert(const Comparable &x) {
  */
 template <typename Comparable>
 void AVL_Tree<Comparable>::remove(const Comparable &x) {
-    throw AVL_Tree_error("remove: ska implementeras!");
+    //throw AVL_Tree_error("remove: ska implementeras!");
+    Node::remove(x, root); // kalla på remove från AVL_Tree_Node (Node)
 }
 
 /**
