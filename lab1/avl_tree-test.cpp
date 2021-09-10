@@ -39,8 +39,8 @@ int main() {
         cout << endl;
     }
     
-
-    //TEST-TRÄD 1
+*/
+    // TEST-TRÄD 1
     
     avl_tree.insert(6);
     avl_tree.insert(4);
@@ -49,8 +49,8 @@ int main() {
 
     cout << "AVL-träd av test 1:\n\n";
     avl_tree.print_tree(cout);
-    
-    //TEST-TRÄD 2
+    /*   
+    // TEST-TRÄD 2
 
     avl_tree.insert(6);
     avl_tree.insert(4);
@@ -59,9 +59,8 @@ int main() {
     
     cout << "AVL-träd av test 2:\n\n";
     avl_tree.print_tree(cout);
-*/
 
-    //TEST-TRÄD 3
+    // TEST-TRÄD 3
 
     avl_tree.insert(9);
     avl_tree.insert(4);
@@ -76,12 +75,12 @@ int main() {
     avl_tree.insert(7);
     avl_tree.insert(13);
     avl_tree.insert(8);
-   
-    
+       
     cout << "AVL-träd av test 3:\n\n";
     avl_tree.print_tree(cout);
-/*
+    
 
+    // TEST-LEKTIONSUPPGIFT 1
     avl_tree.insert(44);
     avl_tree.insert(20);
     avl_tree.insert(56);
@@ -90,11 +89,10 @@ int main() {
     avl_tree.insert(50);
     avl_tree.insert(40);
    
-    
-    cout << "AVL-träd av test 3:\n\n";
+    cout << "AVL-träd av lektionsuppgift 1:\n\n";
     avl_tree.print_tree(cout);
 
-
+    // TEST-LEKTIONSUPPGIFT 2
     avl_tree.insert(44);
     avl_tree.insert(20);
     avl_tree.insert(60);
@@ -103,12 +101,10 @@ int main() {
     avl_tree.insert(70);
     avl_tree.insert(99);
    
-    
-    cout << "AVL-träd av test 3:\n\n";
+    cout << "AVL-träd av lektionsuppgift 2:\n\n";
     avl_tree.print_tree(cout);
 
-
-
+    // TEST-LEKTIONSUPPGIFT 3
     avl_tree.insert(44);
     avl_tree.insert(20);
     avl_tree.insert(60);
@@ -116,12 +112,11 @@ int main() {
     avl_tree.insert(50);
     avl_tree.insert(70);
     avl_tree.insert(45);
-   
-    
-    cout << "AVL-träd av test 3:\n\n";
+       
+    cout << "AVL-träd av lektionsuppgift 3:\n\n";
     avl_tree.print_tree(cout);
 
-
+    // TEST-LEKTIONSUPPGIFT 4
     avl_tree.insert(44);
     avl_tree.insert(20);
     avl_tree.insert(56);
@@ -132,9 +127,49 @@ int main() {
     avl_tree.insert(40);
    
     
-    cout << "AVL-träd av test 3:\n\n";
+    cout << "AVL-träd av lektionsuppgift 4:\n\n";
+    avl_tree.print_tree(cout);
+
+
+    // TEST-LEKTIONSUPPGIFT 7
+    avl_tree.insert(21);
+    avl_tree.insert(13);
+    avl_tree.insert(29);
+    avl_tree.insert(8);
+    avl_tree.insert(18);
+    avl_tree.insert(26);
+    avl_tree.insert(32);
+    avl_tree.insert(5);
+    avl_tree.insert(11);
+    avl_tree.insert(16);
+    avl_tree.insert(20);
+    avl_tree.insert(24);
+    avl_tree.insert(28);
+    avl_tree.insert(31);
+    avl_tree.insert(33);
+    avl_tree.insert(3);
+    avl_tree.insert(7);
+    avl_tree.insert(10);
+    avl_tree.insert(12);
+    avl_tree.insert(15);
+    avl_tree.insert(17);
+    avl_tree.insert(19);
+    avl_tree.insert(23);
+    avl_tree.insert(25);
+    avl_tree.insert(27);
+    avl_tree.insert(30);
+    avl_tree.insert(2);
+    avl_tree.insert(4);
+    avl_tree.insert(6);
+    avl_tree.insert(9);
+    avl_tree.insert(14);
+    avl_tree.insert(22);
+    avl_tree.insert(1);
+    
+    cout << "AVL-träd av lektionsuppgift 7:\n\n";
     avl_tree.print_tree(cout);
 */
+    
     unsigned int choice;
     unsigned int value;
 
