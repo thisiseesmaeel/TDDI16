@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
     // Table.
     Key table[N];
 
-    // Read table.
+    // Read table.j
     for (int i{0}; i < N; i++) {
         string buffer;
         if (!(cin >> buffer)) {
