@@ -7,7 +7,6 @@
 
 using namespace std;
 
-// custom hash can be a standalone function object:
 struct MyHash
 {
     std::size_t operator()(Key const& k) const noexcept
@@ -16,7 +15,7 @@ struct MyHash
         std::size_t hash{0};
         for(int i{0}; i < N; i++)
         {
-            if(k.digit[i])
+            if(k.bit(i))
             {
                 hash += pow(2, potens) * 20;
             }
@@ -51,49 +50,27 @@ int main(int argc, char* argv[]) {
 
     auto begin = chrono::high_resolution_clock::now();
 
-
     unordered_map <Key, Key, MyHash> map;
-    // Find all possible passwords that hash to 'hashed' and print them.
-
     Key candidate{};
-    // for(int i{0}; i < pow(2,10) ; i++)
-    // {
-    //     cout << candidate << endl;
-    //     candidate ++;
-    // }
-    // C = 5
-    // B = 5
-    // N = 25
+    Key zero{};
 
     for(int i{0}; i < pow(2, N/2) ; i++)
     {
         Key enc = subset_sum(candidate, table);
-        map[candidate] = enc;
+        map[enc] = candidate;
         candidate++;
     }
+    Key step = candidate;
 
-    Key candidate2 {};
-    Key zero{};
-    candidate2 = candidate;
-    
     do
-    {  
-        Key temp = hashed - subset_sum(candidate2, table);
-        for (auto& it : map) {
-            if(it.second == temp)
+    {
+        auto search = map.find( hashed - subset_sum(candidate, table) );
+        if(search != map.end())
             {
-                cout << it.first + candidate2 << endl;
-                break;
+                cout << (search -> second + candidate) << endl;
             }
-        }
-        // auto it = map.find(hashed-enc);
-        // if(it != map.end())
-        //     {
-        //         cout << (it -> first + candidate2) << endl;
-        //     }
-        candidate2 += candidate;
-    } while (candidate2 != zero);
-    
+        candidate += step;
+    } while (candidate != zero);
     
     auto end = chrono::high_resolution_clock::now();
     cout << "Decryption took "
