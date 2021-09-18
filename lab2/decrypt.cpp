@@ -17,7 +17,7 @@ struct MyHash
         {
             if(k.bit(i))
             {
-                hash += pow(2, potens) * 20;
+                hash += pow(2, potens) * 30;
             }
             potens++;
         }
@@ -49,19 +49,19 @@ int main(int argc, char* argv[]) {
     }
 
     auto begin = chrono::high_resolution_clock::now();
-
     unordered_map <Key, Key, MyHash> map;
     Key candidate{};
     Key zero{};
 
-    for(int i{0}; i < pow(2, N/2) ; i++)
+    do
     {
         Key enc = subset_sum(candidate, table);
         map[enc] = candidate;
         candidate++;
-    }
-    Key step = candidate;
+    } while(!candidate.bit( N - (N/2) - 1));
 
+    Key step{};
+    step += candidate;
     do
     {
         auto search = map.find( hashed - subset_sum(candidate, table) );
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
             }
         candidate += step;
     } while (candidate != zero);
-    
+
     auto end = chrono::high_resolution_clock::now();
     cout << "Decryption took "
          << std::chrono::duration_cast<chrono::seconds>(end - begin).count()
