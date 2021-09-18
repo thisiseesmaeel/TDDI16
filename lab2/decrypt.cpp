@@ -11,15 +11,13 @@ struct MyHash
 {
     std::size_t operator()(Key const& k) const noexcept
     {
-        std::size_t potens{0};
         std::size_t hash{0};
-        for(int i{0}; i < N; i++)
-        {
+        for(int i { N - 1 }; i >= 0; i--)  /// convert a binary number to a decimal number.
+        {                                  ///Ex: 1010 in binary = 0 * (2^0) + 1 * (2^1) + 0 * (2^2) + 1 * (2^3) = 10 in decimal 
             if(k.bit(i))
             {
-                hash += pow(2, potens) * 30;
+                hash += pow(2, N - 1 - i);
             }
-            potens++;
         }
         return hash;
     }
@@ -52,22 +50,29 @@ int main(int argc, char* argv[]) {
     unordered_map <Key, Key, MyHash> map;
     Key candidate{};
     Key zero{};
+    int index = N / 2;
+    if(N % 2 != 0)
+        index = N * 0.6;
+    cout << "N :\t" << N << "\tindex:\t" << index << endl;
 
     do
     {
         Key enc = subset_sum(candidate, table);
         map[enc] = candidate;
         candidate++;
-    } while(!candidate.bit( N - (N/2) - 1));
+    } while(!candidate.bit( index ));
 
     Key step{};
     step += candidate;
+    int counter{0};
+
     do
     {
         auto search = map.find( hashed - subset_sum(candidate, table) );
         if(search != map.end())
             {
                 cout << (search -> second + candidate) << endl;
+                counter ++;
             }
         candidate += step;
     } while (candidate != zero);
@@ -77,5 +82,6 @@ int main(int argc, char* argv[]) {
          << std::chrono::duration_cast<chrono::seconds>(end - begin).count()
          << " seconds." << endl;
 
+    cout << "Founded passwords:\t" << counter << endl;
     return 0;
 }

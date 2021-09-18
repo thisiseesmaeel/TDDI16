@@ -10,7 +10,9 @@ using namespace std;
 
 int main()
 {
-    cout << 25/2 << endl;
+    int t;
+    t = 25 * 0.6;
+    cout << t << endl;
 //     int i = 0;
 //     do{
 //         cout << i << endl;
