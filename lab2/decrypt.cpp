@@ -4,6 +4,7 @@
 #include "key.h"
 #include <unordered_map>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 
@@ -29,7 +30,7 @@ int main(int argc, char* argv[]) {
         cout << argv[0] << " <hashed password> < rand8.txt" << endl;
         return 1;
     }
-
+   
     // Hashed password.
     Key hashed{argv[1]};
 
@@ -47,41 +48,49 @@ int main(int argc, char* argv[]) {
     }
 
     auto begin = chrono::high_resolution_clock::now();
-    unordered_map <Key, Key, MyHash> map;
+    unordered_map <Key, vector<Key>, MyHash> map;
     Key candidate{};
     Key zero{};
     int index = N / 2;
-    if(N % 2 != 0)
-        index = N * 0.6;
-    cout << "N :\t" << N << "\tindex:\t" << index << endl;
-
+    
     do
     {
         Key enc = subset_sum(candidate, table);
-        map[enc] = candidate;
+        auto search = map.find(enc);
+        if(search != map.end()){
+            
+            map[enc].push_back(candidate);
+        }
+        else
+        {
+            vector<Key> temp {candidate};
+            map[enc] = temp;
+        }
+        
         candidate++;
     } while(!candidate.bit( index ));
 
     Key step{};
     step += candidate;
-    int counter{0};
+    Key candidate2;
 
     do
     {
-        auto search = map.find( hashed - subset_sum(candidate, table) );
+        auto search = map.find(hashed - subset_sum(candidate2, table));
         if(search != map.end())
             {
-                cout << (search -> second + candidate) << endl;
-                counter ++;
+                for(auto it = (search -> second).begin(); it != (search -> second).end(); it++ )
+                {
+                    cout << *it + candidate2 << endl;
+                }
             }
-        candidate += step;
-    } while (candidate != zero);
+        candidate2 += step;
+    } while (candidate2 != zero);
 
     auto end = chrono::high_resolution_clock::now();
     cout << "Decryption took "
          << std::chrono::duration_cast<chrono::seconds>(end - begin).count()
          << " seconds." << endl;
 
-    cout << "Founded passwords:\t" << counter << endl;
     return 0;
 }
