@@ -22,7 +22,6 @@ typedef unordered_set<string> Dictionary;
 
 vector<string> find_neighbors(const Dictionary &dict, const string &word)
 {   
-    int counter = 1;
     vector<string> neighbors{};
     for(int i{0}; i < 4; i++) // 4 gånger
     {   
@@ -32,9 +31,7 @@ vector<string> find_neighbors(const Dictionary &dict, const string &word)
         {
             if((char) j == current_char)
                 continue;
-
             temp[i] = (char) j;
-            counter ++;
             if(dict.find(temp) != dict.end()) // ordo(c) där c är konstant
             {
                 neighbors.push_back(temp);
@@ -120,7 +117,6 @@ vector<string> find_longest(const Dictionary &dict, const string &word) {
         }
 
     }
-    cout << "Hello" << endl;
     while(current != word)
     {
         result.push_back(current);
@@ -203,10 +199,6 @@ void read_questions(const Dictionary &dict) {
 int main() {
     Dictionary dict = read_dictionary();
     read_questions(dict);
-    // for(auto i: find_neighbors(dict, "yeti"))
-    // {
-    //     cout << i << endl;
-    // }
     
     return 0;
 }
