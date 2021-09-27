@@ -2,12 +2,14 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <unordered_set>
 #include <algorithm>
 #include <map>
 
 using std::vector;
 using std::string;
 using std::queue;
+using std::unordered_set;
 using std::map;
 using std::cout;
 using std::endl;
@@ -16,20 +18,24 @@ using std::endl;
 // representationen av en ordlista utefter vad din implementation behöver. Funktionen
 // "read_questions" skickar ordlistan till "find_shortest" och "find_longest" med hjälp av denna
 // typen.
-typedef vector<string> Dictionary;
+typedef unordered_set<string> Dictionary;
 
-////////// Hadi ///////////
 vector<string> find_neighbors(const Dictionary &dict, const string &word)
-{
-    vector<string> neighbors;
-    // jämför ord med alla andra ord i dict
-    for(int i{0}; i < word.size(); i++)
-    {
+{   
+    int counter = 1;
+    vector<string> neighbors{};
+    for(int i{0}; i < 4; i++) // 4 gånger
+    {   
+        char const current_char = word[i];
         string temp = word;
-        for(int j{97}; j < 123; j++)
+        for(int j{97}; j < 123; j++) // 26 gånger
         {
+            if((char) j == current_char)
+                continue;
+
             temp[i] = (char) j;
-            if(find(dict.begin(), dict.end(), temp) != dict.end())
+            counter ++;
+            if(dict.find(temp) != dict.end()) // ordo(c) där c är konstant
             {
                 neighbors.push_back(temp);
             }
@@ -38,8 +44,6 @@ vector<string> find_neighbors(const Dictionary &dict, const string &word)
     return neighbors;
 }
 
-//////////////////////
-
 /**
  * Hitta den kortaste ordkedjan från 'first' till 'second' givet de ord som finns i
  * 'dict'. Returvärdet är den ordkedja som hittats, första elementet ska vara 'from' och sista
@@ -47,50 +51,23 @@ vector<string> find_neighbors(const Dictionary &dict, const string &word)
  */
 vector<string> find_shortest(const Dictionary &dict, const string &from, const string &to) {
     vector<string> result;
-    vector<string> visited;    
+    unordered_set<string> visited;    
     map<string, string> m; // en map som håller koll på var vi kom ifrån
     queue <string> q;
 
     q.push(from);
-    visited.push_back(from);
+    visited.insert(from);
 
     while(!q.empty())
     {
         string current = q.front(); q.pop();
-        //cout << "current is:\t" << current << endl;
-        //cout << "q is:\t"; 
-        queue <string> q2 = q;
-        // while(!q2.empty())
-        // {
-        //     cout << q2.front() << "  ";
-        //     q2.pop();
-        // }
-        //cout << endl;
-
-        //cout << "Visited:\t";
-        // for(auto i : visited)
-        // {
-        //     cout << i << "  ";
-        // }
-        //cout << endl;
-        //cout << "neighbors of " << current << ":"<< endl; 
-        int number {1};
         for(auto i: find_neighbors(dict, current))
         {
-            //cout << number << ". " << i << endl;
-            number ++;
             if( i == to )
             {          
-                visited.push_back(to);
+                visited.insert(to);
                 m[i] = current;
-                //cout << endl;
                 string temp = i;
-
-                //cout << "This is the map:" << endl;
-                // for(auto it: m)
-                // {
-                //     cout << it.first << " previous :  " << it.second << endl;
-                // }
                 while (temp != from)
                 {
                     result.push_back(temp);
@@ -102,19 +79,16 @@ vector<string> find_shortest(const Dictionary &dict, const string &from, const s
                 return result;
             }
 
-            if(find(visited.begin(), visited.end(), i) == visited.end())
+            if(visited.find(i) == visited.end())
             {
-                //cout << i << " is not visited" << endl;
-                visited.push_back(i);
+                visited.insert(i);
                 q.push(i);
                 m[i] = current;
             }
 
         }
-        //cout << endl;
+       
     }
-    //cout << endl;
-
     return result;
 }
 
@@ -123,54 +97,37 @@ vector<string> find_shortest(const Dictionary &dict, const string &from, const s
  * ordkedja som hittats. Det sista elementet ska vara 'word'.
  */
 vector<string> find_longest(const Dictionary &dict, const string &word) {
-    vector<string> result(1, word);
-    vector <vector<string>> word_chains{};
-    int longest{0};
+    vector<string> result;
+    unordered_set<string> visited;
+    queue<string> q;
+    map<string, string> m;
+    
+    visited.insert(word);
+    q.push(word);
 
-    for(auto &w: dict)
+    string current;
+    while (!q.empty())
     {
-        if(w == word)
-            continue;
-        vector<string> temp = find_shortest(dict, w, word);
-        int size = temp.size();
-        if(size != 0 && size > longest)
+        current = q.front(); q.pop();
+        for(auto neighbor: find_neighbors(dict, current))
         {
-            //cout << "Size is not zero" << endl;
-            longest = size;
-            result = temp;
+            if(visited.find(neighbor) == visited.end())
+            {
+                visited.insert(neighbor);
+                q.push(neighbor);
+                m[neighbor] = current;
+            }
         }
-            
+
     }
-    //cout << "Done with finding all path to " << word << endl;
-    // if(word_chains.size() == 0) return result;
-    // auto max = max_element(word_chains.begin(), word_chains.end(), 
-    //     [](vector<string> &A, vector<string> &B) {
-    //         return A.size() < B.size();
-    //     });
-
-    //cout << word_chains.size() << endl;
-
-    // int num {1};
-    // for(auto it: word_chains)
-    // {
-    //     cout << num << ". ";
-    //     for(auto it2: it)
-    //     {
-    //         cout << it2 << "\t";
-    //     }
-    //     cout << endl;
-    //     num ++;
-    // }
-    // cout << "Size of longest is " << (*max).size() << endl;
-    // cout << "This is a longest of shortest path to " << word << endl;
-    // for(auto i: *max)
-    // { 
-    //     cout << i << endl; 
-    // }
-    // if((*max).size() > 1)
-    //     result = *max;
-
-    //cout << "TODO: Implement me!" << endl;
+    cout << "Hello" << endl;
+    while(current != word)
+    {
+        result.push_back(current);
+        current = m[current];
+    }
+    result.push_back(word);
+    
     return result;
 }
 
@@ -246,6 +203,10 @@ void read_questions(const Dictionary &dict) {
 int main() {
     Dictionary dict = read_dictionary();
     read_questions(dict);
-
+    // for(auto i: find_neighbors(dict, "yeti"))
+    // {
+    //     cout << i << endl;
+    // }
+    
     return 0;
 }

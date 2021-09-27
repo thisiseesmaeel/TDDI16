@@ -3,18 +3,24 @@
 #include <string>
 #include <queue>
 #include <algorithm>
+#include <unordered_set>
 
 using namespace std;
 
-int main()
+vector<string> finddd(unordered_set<string> s)
 {
+    vector<string> empty{};
+    return empty;
+}
+int main()
+{   
+    unordered_set<string> set{"aaaa", "aaab", "baaa", "aabb", "baba", "babb" };
+    string s = "aaaa";
 
-    char a {'a'};
-
-    // string s {"test"};
-    for(int i{97}; i < 123; i++)
+    for(auto i : finddd(set))
     {
-        cout << (char) i << endl;
+        cout << i << endl;
     }
+
     return 1;
 }
