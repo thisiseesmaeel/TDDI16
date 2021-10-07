@@ -29,7 +29,7 @@ int main(int argc, const char* argv[]) {
         points.push_back(Point{x, y});
     }
 
-    // draw points to screen all at once
+    // // draw points to screen all at once
     window->draw(points);
 
     // sort points by natural order

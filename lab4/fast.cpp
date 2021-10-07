@@ -38,8 +38,75 @@ int main(int argc, const char* argv[]) {
 
     auto begin = chrono::high_resolution_clock::now();
 
+    //vector<Point> points = points;
     /////////////////////////////////////////////////////////////////////////////
     // Draw any lines that you find in 'points' using the function 'window->draw'.
+    unsigned int lenght_of_vector = points.size();
+    while (true)
+    {   
+        if(lenght_of_vector < 4 ) break;
+        Point origo = points.back();
+        points.pop_back();
+        lenght_of_vector--;
+        PolarSorter comparator(origo);
+        
+        sort(points.begin(), points.end(), comparator);
+  
+        // GAMMAL  
+        // sort(points.begin(), points.end(),
+        //     [origo](Point &a, Point &b){
+        //         return a.slopeTo(origo) > b.slopeTo(origo);
+        //     });
+        // cout << "Origo is: " << origo << endl;
+        // for(auto e: points){
+        //     cout << e << "  " << e.slopeTo(origo) << "  ";
+        // }
+        //cout << endl;
+
+        int draw_line {0};
+        for(int i{0}; i < lenght_of_vector - 1; ++i)
+        {
+            if(points[i].slopeTo(origo) == points[i + 1].slopeTo(origo))
+            {
+                draw_line++;
+                cout << draw_line << endl;
+                if(draw_line >= 2 && i == lenght_of_vector - 2)
+                {
+                    for(int k{0}; k < draw_line + 1 ; k++){
+                        cout << "Drawing a line from " << origo << " to " << points[i + 1 - k] << endl;
+                        window->draw(origo, points[i + 1 - k]);
+                    }
+                    
+                    draw_line = 0;
+                }
+                
+            }
+            else{
+                cout << "Draw_line is: " <<  draw_line << endl;
+                if(draw_line >= 2)
+                {
+                    for(int k{0}; k < draw_line + 1 ; k++){
+                        cout << "Drawing a line from " << origo << " to " << points[i - k] << endl;
+                        window->draw(origo, points[i - k]);
+                    }
+                }
+                draw_line = 0;
+            }
+            
+        }
+    }
+    
+    for(auto origo: points)
+    {
+        sort(points.begin(), points.end(),
+        [origo](Point &a, Point &b){
+            return origo.slopeTo(a) > origo.slopeTo(a);
+        });
+    }
+
+
+
+
     /////////////////////////////////////////////////////////////////////////////
 
     auto end = chrono::high_resolution_clock::now();
