@@ -1,91 +1,103 @@
 /**********************************************************************
- *  Mönsterigenkänning readme.txt
+ *  Mï¿½nsterigenkï¿½nning readme.txt
  **********************************************************************/
 
- Ungefärligt antal timmar spenderade på labben (valfritt):
+ Ungefï¿½rligt antal timmar spenderade pï¿½ labben (valfritt): 3 timmar
 
 /**********************************************************************
  * Empirisk analys
  *
- * Fyll i tabellen nedan med riktiga körtider i sekunder när det känns
- * vettigt att vänta på hela beräkningen.
- * Ge uppskattningar av körtiden (baserat på tidskomplexiteten)
- * i övriga fall.
+ * Fyll i tabellen nedan med riktiga kï¿½rtider i sekunder nï¿½r det kï¿½nns
+ * vettigt att vï¿½nta pï¿½ hela berï¿½kningen.
+ * Ge uppskattningar av kï¿½rtiden (baserat pï¿½ tidskomplexiteten)
+ * i ï¿½vriga fall.
  *
  **********************************************************************/
     
-      N       brute       sortering
+      N       brute (s)      sortering (s)
  ----------------------------------
-    150
-    200
-    300
-    400
-    800
-   1600
-   3200
-   6400
-  12800
+    150         0.004            0.004                    // N ^ 4 * C = tidskomplexiteten                                                                        
+    200         0.013            0.019                    // 150 ^ 4 * C = 4 ms
+    300         0.028            0.014                    // C = 0,000000008
+    400         0.072            0.029                    // uppskattning = 12800 ^ 4 * 0,000000008 = 214748364 ms = 214748 s = 3579 min = 59 dygn
+    800         0.394            0.057
+   1600         3.2              0.164
+   3200         25.2             0.624
+   6400         206.3            2.7
+  12800         59 dygn          12
 
 
 /**********************************************************************
  * Teoretisk analys
  *
- * Ge ordo-uttryck för värstafallstiden för programmen som en funktion
+ * Ge ordo-uttryck fï¿½r vï¿½rstafallstiden fï¿½r programmen som en funktion
  * av N. Ge en kort motivering.
- *
- * Matchar brute-lösningen sitt värstafall i praktiken, eller har den
- * ett medelfall som är bättre?
+ 
+ * Matchar brute-lï¿½sningen sitt vï¿½rstafall i praktiken, eller har den
+ * ett medelfall som ï¿½r bï¿½ttre?
  *
  **********************************************************************/
 
-Brute:
+Brute: 
+ -- Brute har tidskomplexiteten av ordo(N ^ 4). Den har fyra loopar som kÃ¶rs 
+     ett antal gÃ¥nger som Ã¤r beroende pÃ¥ N. Om man ignorerar konstanter sÃ¥
+     visar det sig att den har en tidskomplexitet av ordo(N ^  4).
+     Brute lÃ¶sning har ett bÃ¤ttre medelfall nÃ¤r vi rÃ¤knar ut ifrÃ¥n tidskomplexiteten. 
 
-Sortering:
-
+Sortering: 
+ -- Vi tycker att sorteringslÃ¶sningen har en tidskomplexitet av ordo((N ^ 2) * log N). Detta Ã¤r fÃ¶r att 
+     vi anvÃ¤nder std::sort som har en tidskomplexitet av ordo(N * log N) och vi i yttre while loopen
+     kÃ¶r sorteringen N - 2 gÃ¥nger. Om vi ignorerar konstanter fÃ¥r vi som resultat en tidskomplexitet
+     som Ã¤r N ^ 2 * log N. 
 
 /**********************************************************************
- * Energianvändning
+ * Energianvï¿½ndning
  *
- * Antag att du använder mönsterigenkänningsprogrammet för att analysera
- * data från en kamera. Kameran sitter i en byggnad och tar en bild
- * på stommen av byggnaden var 30:e minut. Bilden förbehandlas sedan
+ * Antag att du anvï¿½nder mï¿½nsterigenkï¿½nningsprogrammet fï¿½r att analysera
+ * data frï¿½n en kamera. Kameran sitter i en byggnad och tar en bild
+ * pï¿½ stommen av byggnaden var 30:e minut. Bilden fï¿½rbehandlas sedan
  * lite, innan punkter som representerar stommen skickas till
- * mönsterigenkänningsprogrammet. Hittas inte tillräckligt många raka
- * linjer så betyder det att något håller på att gå sönder, och
- * att byggnaden behöver noggrannare inspektion.
+ * mï¿½nsterigenkï¿½nningsprogrammet. Hittas inte tillrï¿½ckligt mï¿½nga raka
+ * linjer sï¿½ betyder det att nï¿½got hï¿½ller pï¿½ att gï¿½ sï¿½nder, och
+ * att byggnaden behï¿½ver noggrannare inspektion.
  *
- * Hur mycket energi sparar du på ett år om du använder din snabbare
- * sorteringslösning i stället för brute-lösningen? Du kan anta följande:
- * - Systemet körs 24/7 under hela året.
- * - Inget annat körs på det här systemet.
- * - Systemet drar 8 W när det inte gör något (idle)
- * - Systemet drar 36 W när det arbetar (med 1 kärna)
- * - Räkna med att ditt program körs var 30:e minut (= 2 gånger/timme)
- * - För- och efterbehandling är snabba, så vi kan bortse från dem
- * - Indata till programmet innehåller ca 6400 punkter
- * - Det är inte skottår (= 365 dagar)
+ * Hur mycket energi sparar du pï¿½ ett ï¿½r om du anvï¿½nder din snabbare
+ * sorteringslï¿½sning i stï¿½llet fï¿½r brute-lï¿½sningen? Du kan anta fï¿½ljande:
+ * - Systemet kï¿½rs 24/7 under hela ï¿½ret.
+ * - Inget annat kï¿½rs pï¿½ det hï¿½r systemet.
+ * - Systemet drar 8 W nï¿½r det inte gï¿½r nï¿½got (idle)  
+ * - Systemet drar 36 W nï¿½r det arbetar (med 1 kï¿½rna) 
+ * - Rï¿½kna med att ditt program kï¿½rs var 30:e minut (= 2 gï¿½nger/timme)
+ * - Fï¿½r- och efterbehandling ï¿½r snabba, sï¿½ vi kan bortse frï¿½n dem
+ * - Indata till programmet innehï¿½ller ca 6400 punkter
+ * - Det ï¿½r inte skottï¿½r (= 365 dagar)
  *
- * Att jämföra med drar en kombinerad kyl/frys ca 200 kWh per år
+ * Att jï¿½mfï¿½ra med drar en kombinerad kyl/frys ca 200 kWh per ï¿½r
  * (enligt Energimyndigheten).
  *
- * Kom ihåg: energi mäts ofta i kWh, vilket är:
+ * Kom ihï¿½g: energi mï¿½ts ofta i kWh, vilket ï¿½r:
  *  energi (kWh) = effekt (kW) * tid (h)
  *
- * Tips: ett sätt att räkna på är att först räkna förbrukningen av
- * ett system som inte gör något på ett helt år, sedan lägga till
- * den extra förbrukningen (36 W - 8 W = 28 W) för tiden som systemet
- * är aktiv.
+ * Tips: ett sï¿½tt att rï¿½kna pï¿½ ï¿½r att fï¿½rst rï¿½kna fï¿½rbrukningen av
+ * ett system som inte gï¿½r nï¿½got pï¿½ ett helt ï¿½r, sedan lï¿½gga till
+ * den extra fï¿½rbrukningen (36 W - 8 W = 28 W) fï¿½r tiden som systemet
+ * ï¿½r aktiv.
  *
- * (Siffrorna är löst baserade på en Intel i9-9900K, vi räknar bara på
- * CPU:n för enkelhets skull, besparingarna blir sannolikt större om
- * vi räknar på större delar av systemet, även om andra komponenter
- * också drar ström i "idle".)
+ * (Siffrorna ï¿½r lï¿½st baserade pï¿½ en Intel i9-9900K, vi rï¿½knar bara pï¿½
+ * CPU:n fï¿½r enkelhets skull, besparingarna blir sannolikt stï¿½rre om
+ * vi rï¿½knar pï¿½ stï¿½rre delar av systemet, ï¿½ven om andra komponenter
+ * ocksï¿½ drar strï¿½m i "idle".)
  *
  **********************************************************************/
+Fï¿½rbrukning av brute pï¿½ ett ï¿½r: 95 kWh
 
-Förbrukning av brute på ett år: ? kWh
+// 8 * 24 * 365 = 70080 Wh = 70 kWh  // When idle
+// 6 min * 24 * 365 = 52560 min / year => 876 h / year => 24528 Wh => 25 kWh // When working 
 
-Förbrukning av sotering på ett år: ? kWh
 
-Skillnad: ? kWh
+Fï¿½rbrukning av sotering pï¿½ ett ï¿½r: 70.4 kWh
+// 8 * 24 * 365 = 70080 Wh = 70 kWh  // When idle
+// 6 sec * 24 * 365 =  52560 sec / year => 876 min / year => 14.6 h / year => (14.6 * 28) => 408 Wh => 0.4 kWh // When working 
+
+Skillnad: 24.6 kWh
 

@@ -39,12 +39,12 @@ int main(int argc, const char* argv[]) {
     auto begin = chrono::high_resolution_clock::now();
 
     // iterate through all combinations of 4 points
-    for (int i{0} ; i < N-3 ; ++i) {
-        for (int j{i+1} ; j < N-2 ; ++j) {
-            for (int k{j+1} ; k < N-1 ; ++k) {
+    for (int i{0} ; i < N-3 ; ++i) {        // (N - 3)
+        for (int j{i+1} ; j < N-2 ; ++j) {  // (N - 3) + (N - 4) + (N - 5) + ... + (1)
+            for (int k{j+1} ; k < N-1 ; ++k) { // (N - 3) + (N - 4) + (N - 5) + ... + (1)
                 //only consider fourth point if first three are collinear
                 if (points[i].slopeTo(points[j]) == points[i].slopeTo(points[k])) {
-                    for (int m{k+1} ; m < N ; ++m) {
+                    for (int m{k+1} ; m < N ; ++m) {  // (N - 3) + (N - 4) + (N - 5) + ... + (1)
                         if (points.at(i).slopeTo(points[j]) == points[i].slopeTo(points[m])) {
                             window->draw(points[i], points[m]);
                         }
