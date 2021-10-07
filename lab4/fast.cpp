@@ -51,12 +51,7 @@ int main(int argc, const char* argv[]) {
         PolarSorter comparator(origo);
         
         sort(points.begin(), points.end(), comparator);
-  
-        // GAMMAL  
-        // sort(points.begin(), points.end(),
-        //     [origo](Point &a, Point &b){
-        //         return a.slopeTo(origo) > b.slopeTo(origo);
-        //     });
+
         // cout << "Origo is: " << origo << endl;
         // for(auto e: points){
         //     cout << e << "  " << e.slopeTo(origo) << "  ";
@@ -69,11 +64,11 @@ int main(int argc, const char* argv[]) {
             if(points[i].slopeTo(origo) == points[i + 1].slopeTo(origo))
             {
                 draw_line++;
-                cout << draw_line << endl;
+                //cout << draw_line << endl;
                 if(draw_line >= 2 && i == lenght_of_vector - 2)
                 {
                     for(int k{0}; k < draw_line + 1 ; k++){
-                        cout << "Drawing a line from " << origo << " to " << points[i + 1 - k] << endl;
+                        //cout << "Drawing a line from " << origo << " to " << points[i + 1 - k] << endl;
                         window->draw(origo, points[i + 1 - k]);
                     }
                     
@@ -82,11 +77,11 @@ int main(int argc, const char* argv[]) {
                 
             }
             else{
-                cout << "Draw_line is: " <<  draw_line << endl;
+               // cout << "Draw_line is: " <<  draw_line << endl;
                 if(draw_line >= 2)
                 {
                     for(int k{0}; k < draw_line + 1 ; k++){
-                        cout << "Drawing a line from " << origo << " to " << points[i - k] << endl;
+                    //   cout << "Drawing a line from " << origo << " to " << points[i - k] << endl;
                         window->draw(origo, points[i - k]);
                     }
                 }
